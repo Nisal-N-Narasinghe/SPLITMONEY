@@ -1,0 +1,54 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Models\Group;
+use App\Models\GroupMember;
+use App\Models\Settlement;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Services\BalanceService;
+
+class GroupController extends Controller
+{
+    public function create()
+    {
+        $users = User::all();
+        return view('groups.create', compact('users'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'created_by' => 'required|exists:users,id',
+            'members' => 'required|array|min:1',
+        ]);
+
+        $group = Group::create([
+            'name' => $request->name,
+            'created_by' => $request->created_by,
+        ]);
+
+        $memberIds = array_unique(array_merge($request->members, [$request->created_by]));
+
+        foreach ($memberIds as $userId) {
+            GroupMember::create([
+                'group_id' => $group->id,
+                'user_id' => $userId,
+            ]);
+        }
+
+        return redirect('/groups/' . $group->id)->with('success', 'Group created successfully.');
+    }
+
+
+
+    public function show(Group $group, BalanceService $balanceService)
+    {
+        $group->load(['members.user', 'expenses']);
+        $settlements = Settlement::where('group_id', $group->id)->get();
+        $balances = $balanceService->getGroupBalances($group->id);
+
+        return view('groups.show', compact('group', 'balances', 'settlements'));
+    }
+}
