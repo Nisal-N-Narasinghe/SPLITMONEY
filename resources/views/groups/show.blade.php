@@ -40,6 +40,7 @@
         display: flex;
         gap: 0.6rem;
         flex-wrap: wrap;
+        align-items: center;
     }
 
     .btn-action {
@@ -66,6 +67,26 @@
         background: linear-gradient(135deg, #f59e0b, #ef4444);
         color: white;
         box-shadow: 0 3px 10px rgba(245,158,11,0.3);
+    }
+
+    .btn-delete-group {
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        background: white;
+        color: #dc2626;
+        border: 1.5px solid #fca5a5;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-delete-group:hover {
+        background: #fee2e2;
+        border-color: #dc2626;
     }
 
     .section-card {
@@ -205,6 +226,13 @@
         <a href="/settlements/create/{{ $group->id }}" class="btn-action btn-settlement">
             <i class="bi bi-arrow-left-right"></i> Settle Up
         </a>
+        <form method="POST" action="/groups/{{ $group->id }}" onsubmit="return confirm('Delete \'{{ $group->name }}\'? This will also remove all expenses and settlements.')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-delete-group">
+                <i class="bi bi-trash3"></i> Delete
+            </button>
+        </form>
     </div>
 </div>
 
