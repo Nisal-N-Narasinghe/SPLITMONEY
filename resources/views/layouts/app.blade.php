@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -118,17 +119,76 @@
 
 <div class="main-content">
 
-    @if(session('success'))
-    <div class="alert alert-success d-flex align-items-center gap-2 mb-4">
-        <i class="bi bi-check-circle-fill"></i>
-        {{ session('success') }}
-    </div>
-    @endif
-
     @yield('content')
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(session('success'))
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: @json(session('success')),
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+    @endif
+
+    @if(session('error'))
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: @json(session('error')),
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+    });
+    @endif
+
+    document.querySelectorAll('form[data-confirm]').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = form.dataset.confirm;
+            const title = form.dataset.title || 'Are you sure?';
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Yes, delete it',
+                cancelButtonText: 'Cancel',
+                borderRadius: '16px',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    confirmButton: 'swal-confirm-btn',
+                    cancelButton: 'swal-cancel-btn',
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+<style>
+    .swal2-popup { font-family: 'Inter', sans-serif !important; border-radius: 16px !important; }
+    .swal2-title { font-size: 1.15rem !important; font-weight: 700 !important; }
+    .swal2-html-container { font-size: 0.9rem !important; }
+    .swal2-confirm { border-radius: 10px !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.55rem 1.2rem !important; }
+    .swal2-cancel { border-radius: 10px !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.55rem 1.2rem !important; }
+    .swal2-toast { border-radius: 12px !important; font-family: 'Inter', sans-serif !important; }
+</style>
 </body>
 </html>
