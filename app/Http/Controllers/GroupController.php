@@ -6,30 +6,30 @@ use App\Models\GroupMember;
 use App\Models\Settlement;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Services\BalanceService;
 
 class GroupController extends Controller
 {
     public function create()
     {
-        $users = User::all();
+        $users = User::where('id', '!=', Auth::id())->get();
         return view('groups.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'created_by' => 'required|exists:users,id',
-            'members' => 'required|array|min:1',
+            'name'    => 'required|string|max:255',
+            'members' => 'nullable|array',
         ]);
 
         $group = Group::create([
-            'name' => $request->name,
-            'created_by' => $request->created_by,
+            'name'       => $request->name,
+            'created_by' => Auth::id(),
         ]);
 
-        $memberIds = array_unique(array_merge($request->members, [$request->created_by]));
+        $memberIds = array_unique(array_merge($request->members ?? [], [Auth::id()]));
 
         foreach ($memberIds as $userId) {
             GroupMember::create([

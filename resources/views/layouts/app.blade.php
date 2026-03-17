@@ -34,6 +34,41 @@
             margin-right: 6px;
         }
 
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .navbar-user i {
+            font-size: 1.1rem;
+            color: #38bdf8;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #cbd5e1;
+            border-radius: 8px;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.15s, color 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.18);
+            color: white;
+        }
+
         .main-content {
             max-width: 960px;
             margin: 2.5rem auto;
@@ -59,6 +94,20 @@
         <a class="navbar-brand" href="/">
             <i class="bi bi-cash-coin"></i>SplitMoney
         </a>
+        @auth
+        <div class="d-flex align-items-center gap-3">
+            <div class="navbar-user">
+                <i class="bi bi-person-circle"></i>
+                <span>{{ Auth::user()->name }}</span>
+            </div>
+            <form method="POST" action="/logout" class="m-0">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </form>
+        </div>
+        @endauth
     </div>
 </nav>
 
