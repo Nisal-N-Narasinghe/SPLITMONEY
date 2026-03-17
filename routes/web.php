@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ExpenseController;
@@ -11,6 +12,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard']);
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser']);
+    Route::get('/groups', [AdminController::class, 'groups']);
+    Route::delete('/groups/{group}', [AdminController::class, 'deleteGroup']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);

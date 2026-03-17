@@ -100,6 +100,11 @@
                 <i class="bi bi-person-circle"></i>
                 <span>{{ Auth::user()->name }}</span>
             </div>
+            @if(Auth::user()->is_admin)
+            <a href="/admin" class="btn-logout" style="text-decoration:none;background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;">
+                <i class="bi bi-shield-fill-check"></i> Admin
+            </a>
+            @endif
             <form method="POST" action="/logout" class="m-0">
                 @csrf
                 <button type="submit" class="btn-logout">
