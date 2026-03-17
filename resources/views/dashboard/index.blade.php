@@ -131,6 +131,35 @@
 .group-card:hover .group-card-arrow {
     color: #0ea5e9;
 }
+
+.btn-delete-card {
+    position: absolute;
+    bottom: 1.1rem;
+    right: 1.1rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s, color 0.15s;
+    z-index: 10;
+}
+
+.group-card-wrapper:hover .btn-delete-card {
+    opacity: 1;
+}
+
+.btn-delete-card:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
 </style>
 
 <div class="page-header">
@@ -148,16 +177,25 @@
 @else
 <div class="groups-grid">
     @foreach($groups as $group)
-    <a href="/groups/{{ $group->id }}" class="group-card" style="position:relative;">
-        <div class="group-card-icon">
-            <i class="bi bi-people-fill"></i>
-        </div>
-        <div class="group-card-name">{{ $group->name }}</div>
-        <div class="group-card-meta">
-            <i class="bi bi-hash"></i> Group {{ $group->id }}
-        </div>
-        <i class="bi bi-chevron-right group-card-arrow"></i>
-    </a>
+    <div class="group-card-wrapper" style="position:relative;">
+        <a href="/groups/{{ $group->id }}" class="group-card" style="position:relative;">
+            <div class="group-card-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="group-card-name">{{ $group->name }}</div>
+            <div class="group-card-meta">
+                <i class="bi bi-hash"></i> Group {{ $group->id }}
+            </div>
+            <i class="bi bi-chevron-right group-card-arrow"></i>
+        </a>
+        <form method="POST" action="/groups/{{ $group->id }}" onsubmit="return confirm('Delete \'{{ $group->name }}\'? This will also remove all expenses and settlements.')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-delete-card" title="Delete group">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </form>
+    </div>
     @endforeach
 </div>
 @endif

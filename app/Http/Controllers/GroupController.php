@@ -43,6 +43,21 @@ class GroupController extends Controller
 
 
 
+    public function destroy(Group $group)
+    {
+        $group->expenses()->each(function ($expense) {
+            $expense->splits()->delete();
+            $expense->delete();
+        });
+        $group->members()->delete();
+
+        \App\Models\Settlement::where('group_id', $group->id)->delete();
+
+        $group->delete();
+
+        return redirect('/')->with('success', 'Group deleted successfully.');
+    }
+
     public function show(Group $group, BalanceService $balanceService)
     {
         $group->load(['members.user', 'expenses']);
