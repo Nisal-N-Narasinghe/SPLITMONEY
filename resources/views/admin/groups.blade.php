@@ -139,7 +139,8 @@
                 <td style="color:#94a3b8;font-size:0.78rem;">{{ $group->created_at->format('d M Y') }}</td>
                 <td>
                     <form method="POST" action="/admin/groups/{{ $group->id }}"
-                        onsubmit="return confirm('Delete {{ $group->name }}?')">
+                        data-confirm="All expenses and settlements in this group will also be deleted."
+                        data-title="Delete {{ $group->name }}?">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-del">

@@ -13,7 +13,7 @@ class GroupController extends Controller
 {
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::where('id', '!=', Auth::id())->where('is_admin', false)->get();
         return view('groups.create', compact('users'));
     }
 

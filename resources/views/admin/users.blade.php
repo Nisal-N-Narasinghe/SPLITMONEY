@@ -160,7 +160,8 @@
                 <td><span class="badge-date">{{ $user->created_at->format('d M Y') }}</span></td>
                 <td>
                     <form method="POST" action="/admin/users/{{ $user->id }}"
-                        onsubmit="return confirm('Delete {{ $user->name }}? This cannot be undone.')">
+                        data-confirm="This cannot be undone."
+                        data-title="Delete {{ $user->name }}?">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-del">

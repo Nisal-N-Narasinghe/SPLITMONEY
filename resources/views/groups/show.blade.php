@@ -226,7 +226,9 @@
         <a href="/settlements/create/{{ $group->id }}" class="btn-action btn-settlement">
             <i class="bi bi-arrow-left-right"></i> Settle Up
         </a>
-        <form method="POST" action="/groups/{{ $group->id }}" onsubmit="return confirm('Delete \'{{ $group->name }}\'? This will also remove all expenses and settlements.')">
+        <form method="POST" action="/groups/{{ $group->id }}"
+            data-confirm="This will also remove all expenses and settlements."
+            data-title="Delete '{{ $group->name }}'?">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn-delete-group">
