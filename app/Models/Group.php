@@ -22,4 +22,9 @@ class Group extends Model
     {
         return $this->hasMany(Expense::class);
     }
+
+    public function settlements()
+    {
+        return $this->hasMany(\App\Models\Settlement::class);
+    }
 }
