@@ -188,7 +188,9 @@
             </div>
             <i class="bi bi-chevron-right group-card-arrow"></i>
         </a>
-        <form method="POST" action="/groups/{{ $group->id }}" onsubmit="return confirm('Delete \'{{ $group->name }}\'? This will also remove all expenses and settlements.')">
+        <form method="POST" action="/groups/{{ $group->id }}"
+            data-confirm="This will also remove all expenses and settlements."
+            data-title="Delete '{{ $group->name }}'?">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn-delete-card" title="Delete group">
