@@ -7,33 +7,44 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        margin-bottom: 1.8rem;
+        margin-bottom: 2rem;
         flex-wrap: wrap;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.1);
     }
 
     .back-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: white;
-        border: 1px solid #e2e8f0;
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(79,70,229,0.08));
+        border: 2px solid rgba(124, 58, 237, 0.2);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: #64748b;
+        color: #7c3aed;
         text-decoration: none;
-        transition: background 0.15s;
+        transition: all 0.2s ease;
         flex-shrink: 0;
+        font-size: 1.1rem;
     }
 
-    .back-btn:hover { background: #f1f5f9; color: #0f172a; }
+    .back-btn:hover {
+        background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(79,70,229,0.15));
+        border-color: #7c3aed;
+        transform: translateX(-2px);
+    }
 
     .page-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #0f172a;
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #1e293b, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         margin: 0;
         flex: 1;
+        letter-spacing: -0.5px;
     }
 
     .action-btns {
@@ -44,135 +55,200 @@
     }
 
     .btn-action {
-        padding: 0.5rem 1rem;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.85rem;
+        padding: 0.65rem 1.2rem;
+        border-radius: 11px;
+        font-weight: 700;
+        font-size: 0.9rem;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
-        transition: opacity 0.2s, transform 0.1s;
+        gap: 6px;
+        transition: all 0.3s cubic-bezier(.4,0,.2,1);
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.2px;
     }
 
-    .btn-action:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-action:hover {
+        transform: translateY(-3px);
+    }
 
     .btn-expense {
-        background: linear-gradient(135deg, #0ea5e9, #2563eb);
+        background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #0ea5e9 100%);
+        background-size: 200% 200%;
         color: white;
-        box-shadow: 0 3px 10px rgba(14,165,233,0.3);
+        box-shadow: 0 8px 24px rgba(124,58,237,0.3), 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .btn-expense:hover {
+        box-shadow: 0 12px 40px rgba(124,58,237,0.45), 0 6px 16px rgba(0,0,0,0.15);
+        background-position: 100% 50%;
     }
 
     .btn-settlement {
-        background: linear-gradient(135deg, #f59e0b, #ef4444);
+        background: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #f97316 100%);
+        background-size: 200% 200%;
         color: white;
-        box-shadow: 0 3px 10px rgba(245,158,11,0.3);
+        box-shadow: 0 8px 24px rgba(245,158,11,0.3), 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .btn-settlement:hover {
+        box-shadow: 0 12px 40px rgba(245,158,11,0.4), 0 6px 16px rgba(0,0,0,0.15);
+        background-position: 100% 50%;
     }
 
     .btn-delete-group {
-        padding: 0.5rem 1rem;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        background: white;
+        padding: 0.65rem 1.2rem;
+        border-radius: 11px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.08));
         color: #dc2626;
-        border: 1.5px solid #fca5a5;
+        border: 2px solid rgba(239, 68, 68, 0.3);
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
         cursor: pointer;
-        transition: background 0.15s, border-color 0.15s;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
     }
 
     .btn-delete-group:hover {
         background: #fee2e2;
         border-color: #dc2626;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(220,38,38,0.2);
     }
 
     .section-card {
-        background: white;
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-        border: 1px solid #f1f5f9;
-        margin-bottom: 1.4rem;
+        background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
+        border-radius: 18px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.8);
+        border: 1px solid rgba(124, 58, 237, 0.1);
+        margin-bottom: 1.6rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .section-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #7c3aed, #06b6d4, #4f46e5);
+        border-radius: 18px 18px 0 0;
+        background-size: 200% 100%;
+        animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0%; }
+        50% { background-position: 100%; }
+        100% { background-position: 0%; }
+    }
+
+    .section-card {
+        position: relative;
+    }
+
+    .section-card:hover {
+        box-shadow: 0 8px 24px rgba(124,58,237,0.12), inset 0 1px 2px rgba(255,255,255,0.8);
     }
 
     .section-title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin-bottom: 1.2rem;
         display: flex;
         align-items: center;
         gap: 8px;
+        letter-spacing: -0.3px;
     }
 
     .section-title i {
-        color: #0ea5e9;
-        font-size: 1.1rem;
+        background: linear-gradient(135deg, #7c3aed, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.3rem;
     }
 
     .member-pill {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        background: #f0f9ff;
-        border: 1px solid #bae6fd;
-        color: #0369a1;
-        border-radius: 20px;
-        padding: 0.3rem 0.75rem;
-        font-size: 0.82rem;
-        font-weight: 600;
-        margin: 0.2rem;
+        background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(79,70,229,0.1));
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        color: #7c3aed;
+        border-radius: 22px;
+        padding: 0.4rem 0.85rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin: 0.3rem;
+        transition: all 0.2s ease;
+    }
+
+    .member-pill:hover {
+        background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(79,70,229,0.2));
+        border-color: #7c3aed;
     }
 
     .balance-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.7rem 0;
-        border-bottom: 1px solid #f1f5f9;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+        transition: background 0.2s ease;
     }
+
+    .balance-row:hover { background: rgba(124,58,237,0.03); }
 
     .balance-row:last-child { border-bottom: none; }
 
     .balance-name {
-        font-size: 0.9rem;
-        font-weight: 600;
+        font-size: 0.95rem;
+        font-weight: 700;
         color: #1e293b;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
+        letter-spacing: -0.2px;
     }
 
-    .balance-name i { color: #94a3b8; }
+    .balance-name i { color: #a78bfa; }
 
     .badge-gets {
-        background: #dcfce7;
+        background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(34,197,94,0.15));
         color: #166534;
         border-radius: 8px;
-        padding: 0.25rem 0.7rem;
-        font-size: 0.82rem;
-        font-weight: 700;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 800;
+        border: 1px solid rgba(74, 222, 128, 0.3);
     }
 
     .badge-owes {
-        background: #fee2e2;
+        background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.15));
         color: #991b1b;
         border-radius: 8px;
-        padding: 0.25rem 0.7rem;
-        font-size: 0.82rem;
-        font-weight: 700;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 800;
+        border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
     .badge-settled {
-        background: #f1f5f9;
-        color: #64748b;
+        background: rgba(124,58,237,0.1);
+        color: #7c3aed;
         border-radius: 8px;
-        padding: 0.25rem 0.7rem;
-        font-size: 0.82rem;
-        font-weight: 600;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 800;
+        border: 1px solid rgba(124, 58, 237, 0.3);
     }
 
     .data-table {
@@ -182,19 +258,19 @@
     }
 
     .data-table thead th {
-        background: #f8fafc;
+        background: linear-gradient(90deg, rgba(124,58,237,0.05), rgba(79,70,229,0.05));
         color: #64748b;
-        font-size: 0.78rem;
-        font-weight: 700;
+        font-size: 0.8rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        padding: 0.65rem 0.9rem;
-        border-bottom: 2px solid #f1f5f9;
+        letter-spacing: 0.6px;
+        padding: 0.8rem 1rem;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.15);
     }
 
     .data-table tbody td {
-        padding: 0.75rem 0.9rem;
-        border-bottom: 1px solid #f8fafc;
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.08);
         color: #334155;
         vertical-align: middle;
     }
