@@ -591,20 +591,20 @@
             right: 28px;
             z-index: 1050;
             display: grid;
-            grid-template-columns: auto 1fr;
+            grid-template-columns: auto;
             align-items: center;
-            gap: 0.62rem;
+            gap: 0;
             text-decoration: none;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(247, 249, 246, 0.95));
             border: 1px solid rgba(148, 163, 184, 0.28);
             border-radius: 18px;
-            padding: 8px 10px 8px 8px;
-            min-width: 192px;
+            padding: 8px;
+            width: 64px;
             height: 64px;
             overflow: hidden;
             backdrop-filter: blur(10px);
             box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.55);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
             animation: fab-drift 4.5s ease-in-out infinite;
         }
 
@@ -642,6 +642,10 @@
         }
 
         .ai-fab:hover {
+            width: 192px;
+            grid-template-columns: auto 1fr;
+            gap: 0.62rem;
+            padding: 8px 10px 8px 8px;
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 18px 30px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.65);
             filter: saturate(1.02);
@@ -722,6 +726,15 @@
             display: flex;
             flex-direction: column;
             line-height: 1.05;
+            opacity: 0;
+            width: 0;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .ai-fab:hover .ai-fab-label-wrap {
+            opacity: 1;
+            width: auto;
         }
 
         .ai-fab-kicker {
@@ -767,9 +780,14 @@
             .ai-fab {
                 bottom: 16px;
                 right: 16px;
-                min-width: 160px;
+                width: 56px;
                 height: 56px;
                 border-radius: 16px;
+                padding: 6px;
+            }
+
+            .ai-fab:hover {
+                width: 160px;
                 padding: 6px 8px 6px 6px;
             }
 
