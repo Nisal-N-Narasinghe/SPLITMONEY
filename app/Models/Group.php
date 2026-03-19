@@ -27,4 +27,9 @@ class Group extends Model
     {
         return $this->hasMany(\App\Models\Settlement::class);
     }
+
+    public function trips()
+    {
+        return $this->hasMany(\App\Models\Trip::class);
+    }
 }

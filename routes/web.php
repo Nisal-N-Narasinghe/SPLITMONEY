@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\SettlementController;
+use App\Http\Controllers\TripPlannerController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -23,6 +24,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
+
+    Route::get('/trip-planner', [TripPlannerController::class, 'index']);
+    Route::post('/trip-planner/plan', [TripPlannerController::class, 'plan']);
+    Route::post('/trip-planner/create-group', [TripPlannerController::class, 'createGroup']);
 
     Route::get('/groups/create', [GroupController::class, 'create']);
     Route::post('/groups', [GroupController::class, 'store']);

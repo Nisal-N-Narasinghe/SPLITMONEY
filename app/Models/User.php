@@ -19,6 +19,11 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\GroupMember::class);
     }
 
+    public function trips()
+    {
+        return $this->hasMany(\App\Models\Trip::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
