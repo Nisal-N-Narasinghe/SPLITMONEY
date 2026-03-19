@@ -32,10 +32,13 @@
         flex-shrink: 0;
     }
 
-    .stat-icon.blue   { background: #e0f2fe; color: #0284c7; }
-    .stat-icon.green  { background: #dcfce7; color: #16a34a; }
-    .stat-icon.orange { background: #fef3c7; color: #d97706; }
-    .stat-icon.purple { background: #ede9fe; color: #7c3aed; }
+    .stat-icon.blue,
+    .stat-icon.green,
+    .stat-icon.orange,
+    .stat-icon.purple {
+        background: rgba(8, 145, 178, 0.22);
+        color: #67e8f9;
+    }
 
     .stat-value {
         font-size: 1.8rem;
@@ -101,9 +104,20 @@
     .user-date { font-size: 0.78rem; color: #94a3b8; }
 </style>
 
-<h1 style="font-size:1.4rem;font-weight:700;color:#0f172a;margin-bottom:1.5rem;">
+<h1 class="page-title">
     Admin Overview
 </h1>
+
+<style>
+    .page-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #e2e8f0;
+        margin-bottom: 1.5rem;
+        font-family: 'Chakra Petch', sans-serif;
+        letter-spacing: 0.01em;
+    }
+</style>
 
 <div class="stats-grid">
     <div class="stat-card">
