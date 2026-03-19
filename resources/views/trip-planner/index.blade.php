@@ -5,145 +5,287 @@
     .planner-shell {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 2rem;
     }
 
     .planner-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
-        padding: 1.2rem;
+        background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
+        border: 1px solid rgba(124, 58, 237, 0.15);
+        border-radius: 20px;
+        box-shadow: 0 12px 40px rgba(124,58,237,0.15), 0 4px 16px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.8);
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        animation: cardFadeIn 0.6s ease;
+    }
+
+    @keyframes cardFadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .planner-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #7c3aed, #06b6d4, #4f46e5);
+        border-radius: 20px 20px 0 0;
+        background-size: 200% 100%;
+        animation: gradientFlow 4s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+        0% { background-position: 0%; }
+        50% { background-position: 100%; }
+        100% { background-position: 0%; }
+    }
+
+    .planner-card {
+        position: relative;
     }
 
     .planner-title {
-        margin: 0 0 0.25rem;
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #0f172a;
+        margin: 0 0 0.4rem;
+        font-size: 1.6rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #1e293b, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
     }
 
     .planner-subtitle {
-        margin: 0 0 1rem;
+        margin: 0 0 1.5rem;
         color: #64748b;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+        line-height: 1.4;
     }
 
     .planner-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 0.8rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem;
     }
 
     .planner-input,
     .planner-select,
     .planner-textarea {
         width: 100%;
-        border: 1px solid #cbd5e1;
-        border-radius: 10px;
-        padding: 0.55rem 0.7rem;
-        font-size: 0.9rem;
+        border: 2px solid rgba(124, 58, 237, 0.15);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        font-family: 'Inter', sans-serif;
+        background: rgba(255,255,255,0.7);
+        color: #1e293b;
+        transition: all 0.3s ease;
+    }
+
+    .planner-input:focus,
+    .planner-select:focus,
+    .planner-textarea:focus {
+        outline: none;
+        border-color: #7c3aed;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1), 0 4px 12px rgba(124, 58, 237, 0.15);
     }
 
     .planner-textarea {
-        min-height: 95px;
+        min-height: 110px;
         resize: vertical;
     }
 
     .planner-label {
         display: block;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: #475569;
-        margin-bottom: 0.32rem;
-        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
     }
 
     .planner-btn {
-        background: linear-gradient(135deg, #0284c7, #1d4ed8);
+        background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #0ea5e9 100%);
+        background-size: 200% 200%;
         color: #fff;
         border: none;
-        border-radius: 10px;
-        padding: 0.58rem 1.05rem;
-        font-weight: 600;
-        font-size: 0.9rem;
+        border-radius: 12px;
+        padding: 0.75rem 1.4rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(.4,0,.2,1);
+        box-shadow: 0 8px 24px rgba(124,58,237,0.35), 0 4px 12px rgba(0,0,0,0.1);
+        letter-spacing: 0.3px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .planner-btn:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(124,58,237,0.45), 0 6px 16px rgba(0,0,0,0.15);
+        background-position: 100% 50%;
+    }
+
+    .planner-btn:active:not(:disabled) {
+        transform: translateY(-1px);
     }
 
     .planner-btn:disabled {
-        opacity: 0.7;
-        cursor: wait;
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .planner-btn.loading::after {
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 
     .budget-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 0.7rem;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
     }
 
     .budget-box {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 0.7rem;
+        background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(79,70,229,0.08));
+        border: 2px solid rgba(124, 58, 237, 0.2);
+        border-radius: 14px;
+        padding: 1.2rem;
+        transition: all 0.3s ease;
+        animation: budgetEnter 0.5s ease forwards;
+    }
+
+    @keyframes budgetEnter {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .budget-box:hover {
+        border-color: #7c3aed;
+        box-shadow: 0 8px 24px rgba(124,58,237,0.2);
+        transform: translateY(-2px);
     }
 
     .budget-label {
         color: #64748b;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
     }
 
     .budget-value {
-        color: #0f172a;
-        font-weight: 700;
-        font-size: 1rem;
+        color: #7c3aed;
+        font-weight: 800;
+        font-size: 1.4rem;
+        letter-spacing: -0.3px;
     }
 
     .itinerary-day {
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 0.75rem;
-        margin-bottom: 0.65rem;
-        background: #fcfdff;
+        border: 2px solid rgba(124, 58, 237, 0.15);
+        border-radius: 14px;
+        padding: 1.2rem;
+        margin-bottom: 0.8rem;
+        background: linear-gradient(135deg, rgba(124,58,237,0.04), rgba(79,70,229,0.04));
+        transition: all 0.3s ease;
+        animation: itenaryEnter 0.5s ease forwards;
+    }
+
+    @keyframes itenaryEnter {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .itinerary-day:hover {
+        border-color: #7c3aed;
+        box-shadow: 0 8px 20px rgba(124,58,237,0.15);
+        background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(79,70,229,0.08));
     }
 
     .itinerary-day h4 {
-        margin: 0 0 0.35rem;
-        font-size: 0.93rem;
-        color: #0f172a;
+        margin: 0 0 0.5rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1e293b;
+        letter-spacing: -0.2px;
     }
 
     .itinerary-day ul {
         margin: 0;
-        padding-left: 1rem;
+        padding-left: 1.4rem;
         color: #334155;
-        font-size: 0.88rem;
+        font-size: 0.9rem;
+    }
+
+    .itinerary-day li {
+        margin-bottom: 0.4rem;
+        line-height: 1.4;
     }
 
     .muted-note {
         color: #94a3b8;
-        font-size: 0.82rem;
+        font-size: 0.85rem;
+        font-weight: 500;
     }
 
     .members-checkbox-list {
-        max-height: 180px;
+        max-height: 220px;
         overflow-y: auto;
-        border: 1px solid #cbd5e1;
+        border: 2px solid rgba(124, 58, 237, 0.15);
+        border-radius: 12px;
+        padding: 0.8rem;
+        background: rgba(255,255,255,0.7);
+    }
+
+    .members-checkbox-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .members-checkbox-list::-webkit-scrollbar-track {
+        background: rgba(124,58,237,0.05);
         border-radius: 10px;
-        padding: 0.5rem;
-        background: #ffffff;
+    }
+
+    .members-checkbox-list::-webkit-scrollbar-thumb {
+        background: rgba(124,58,237,0.3);
+        border-radius: 10px;
+    }
+
+    .members-checkbox-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(124,58,237,0.5);
     }
 
     .member-option {
         display: flex;
         align-items: flex-start;
-        gap: 0.55rem;
-        border: 1px solid #e2e8f0;
+        gap: 0.7rem;
+        border: 2px solid rgba(124, 58, 237, 0.1);
         border-radius: 10px;
-        padding: 0.45rem 0.55rem;
-        margin-bottom: 0.45rem;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 0.6rem;
         cursor: pointer;
-        transition: border-color 0.15s, background-color 0.15s;
+        transition: all 0.2s ease;
+        background: rgba(255,255,255,0.5);
     }
 
     .member-option:last-child {
@@ -151,35 +293,103 @@
     }
 
     .member-option:hover {
-        border-color: #93c5fd;
-        background: #f8fbff;
+        border-color: #7c3aed;
+        background: rgba(124,58,237,0.05);
+        transform: translateX(2px);
     }
 
     .member-option input[type="checkbox"] {
-        margin-top: 0.18rem;
+        margin-top: 0.25rem;
+        cursor: pointer;
+        accent-color: #7c3aed;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
     }
 
     .member-name {
         display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #0f172a;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #1e293b;
         line-height: 1.2;
     }
 
     .member-email {
         display: block;
-        font-size: 0.76rem;
+        font-size: 0.8rem;
         color: #64748b;
         line-height: 1.2;
-        margin-top: 0.15rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+    }
+
+    .ai-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: linear-gradient(90deg, rgba(124,58,237,0.15), rgba(79,70,229,0.15));
+        color: #7c3aed;
+        padding: 0.3rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.8rem;
+        border: 1px solid rgba(124,58,237,0.3);
+    }
+
+    .ai-badge i {
+        animation: badgePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px rgba(124,58,237,0.6)); }
+    }
+
+    @media (max-width: 768px) {
+        .planner-card {
+            padding: 1.5rem;
+        }
+
+        .planner-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .planner-title {
+            font-size: 1.4rem;
+        }
+
+        .budget-grid {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+
+        .budget-value {
+            font-size: 1.2rem;
+        }
+
+        .planner-btn {
+            padding: 0.65rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .planner-input,
+        .planner-select,
+        .planner-textarea {
+            padding: 0.65rem 0.9rem;
+        }
     }
 </style>
 
 <div class="planner-shell">
     <div class="planner-card">
-        <h1 class="planner-title">AI Trip Planner</h1>
-        <p class="planner-subtitle">Generate day-by-day itinerary and budget plan, then create a group directly from the result.</p>
+        <span class="ai-badge">
+            <i class="bi bi-stars"></i> AI-POWERED PLANNING
+        </span>
+        <h1 class="planner-title">Trip Planner</h1>
+        <p class="planner-subtitle">Let AI analyze your destination and generate a complete day-by-day itinerary with category-wise budget break-down. Then instantly create a group from the plan.</p>
 
         <form id="plannerForm" class="planner-grid">
             @csrf
@@ -212,23 +422,34 @@
                 <textarea id="notes" name="notes" class="planner-textarea" placeholder="Family trip, avoid expensive places, prefer beaches, include local food..."></textarea>
             </div>
             <div style="grid-column: 1 / -1; display: flex; align-items: center; gap: 0.7rem;">
-                <button type="submit" class="planner-btn" id="generateBtn">Generate Plan</button>
+                <button type="submit" class="planner-btn" id="generateBtn">
+                    <i class="bi bi-lightbulb-fill"></i> Generate Plan
+                </button>
                 <span class="muted-note" id="plannerStatus">Ready to generate.</span>
             </div>
         </form>
     </div>
 
     <div class="planner-card" id="resultCard" style="display:none;">
-        <h2 class="planner-title" style="font-size:1.05rem;">Plan Result</h2>
+        <span class="ai-badge">
+            <i class="bi bi-check-circle-fill"></i> PLAN GENERATED
+        </span>
+        <h2 class="planner-title" style="font-size:1.4rem;margin-bottom:0.5rem;">Your Trip Plan</h2>
         <p class="planner-subtitle" id="planSummary"></p>
 
-        <div class="budget-grid" id="budgetCategories"></div>
+        <div style="margin-top:1.5rem;">
+            <h3 class="planner-label" style="margin-bottom:0.8rem;">Budget Breakdown</h3>
+            <div class="budget-grid" id="budgetCategories"></div>
+        </div>
 
-        <h3 class="planner-title" style="font-size:1rem;margin-top:1rem;">Daily Itinerary</h3>
-        <div id="itineraryWrap"></div>
+        <div style="margin-top:2rem;">
+            <h3 class="planner-label" style="margin-bottom:0.8rem;">Daily Itinerary</h3>
+            <div id="itineraryWrap"></div>
+        </div>
 
-        <h3 class="planner-title" style="font-size:1rem;margin-top:1rem;">Create Group From This Plan</h3>
-        <form method="POST" action="/trip-planner/create-group">
+        <div style="margin-top:2rem;border-top:2px solid rgba(124,58,237,0.1);padding-top:2rem;">
+            <h3 class="planner-label" style="margin-bottom:1rem;">Create Group From This Plan</h3>
+            <form method="POST" action="/trip-planner/create-group">
             @csrf
             <input type="hidden" name="plan_json" id="planJsonInput">
 
@@ -254,7 +475,9 @@
             </div>
 
             <div style="margin-top: 0.8rem;">
-                <button type="submit" class="planner-btn">Create Group</button>
+                <button type="submit" class="planner-btn">
+                    <i class="bi bi-people-fill"></i> Create Group
+                </button>
             </div>
         </form>
     </div>
@@ -275,7 +498,8 @@
         event.preventDefault();
 
         generateBtn.disabled = true;
-        plannerStatus.textContent = 'Generating with AI...';
+        generateBtn.classList.add('loading');
+        plannerStatus.textContent = '✨ Generating with AI...';
 
         const formData = new FormData(plannerForm);
 
@@ -295,7 +519,7 @@
             }
 
             const plan = payload.plan;
-            planSummary.textContent = plan.summary || 'Trip plan generated.';
+            planSummary.textContent = plan.summary || 'Your personalized trip plan has been generated!';
             groupName.value = (plan.destination || 'Trip') + ' Trip';
 
             budgetCategories.innerHTML = '';
@@ -304,33 +528,42 @@
 
             const totalBox = document.createElement('div');
             totalBox.className = 'budget-box';
-            totalBox.innerHTML = '<div class="budget-label">Total</div><div class="budget-value">' + total + '</div>';
+            totalBox.innerHTML = '<div class="budget-label">Total Budget</div><div class="budget-value">$' + total + '</div>';
             budgetCategories.appendChild(totalBox);
 
             Object.keys(categories).forEach((key) => {
                 const value = Number(categories[key] || 0).toFixed(2);
                 const card = document.createElement('div');
                 card.className = 'budget-box';
-                card.innerHTML = '<div class="budget-label">' + key + '</div><div class="budget-value">' + value + '</div>';
+                card.innerHTML = '<div class="budget-label">' + key.toUpperCase() + '</div><div class="budget-value">$' + value + '</div>';
                 budgetCategories.appendChild(card);
             });
 
             itineraryWrap.innerHTML = '';
-            (plan.daily_plan || []).forEach((dayItem) => {
+            (plan.daily_plan || []).forEach((dayItem, index) => {
                 const card = document.createElement('div');
                 card.className = 'itinerary-day';
+                card.style.animationDelay = (index * 0.1) + 's';
                 const activities = (dayItem.activities || []).map((act) => '<li>' + act + '</li>').join('');
-                card.innerHTML = '<h4>Day ' + dayItem.day + ': ' + (dayItem.title || '') + '</h4><ul>' + activities + '</ul>';
+                card.innerHTML = '<h4><i class="bi bi-calendar-event"></i> Day ' + dayItem.day + ': ' + (dayItem.title || '') + '</h4><ul>' + activities + '</ul>';
                 itineraryWrap.appendChild(card);
             });
 
             planJsonInput.value = JSON.stringify(plan);
             resultCard.style.display = 'block';
-            plannerStatus.textContent = 'Plan generated. Review and create your group.';
+            plannerStatus.textContent = '✓ Plan ready! Review and create your group below.';
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } catch (error) {
-            plannerStatus.textContent = error.message;
+            plannerStatus.textContent = '✗ ' + error.message;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: error.message,
+                confirmButtonText: 'OK'
+            });
         } finally {
             generateBtn.disabled = false;
+            generateBtn.classList.remove('loading');
         }
     });
 </script>
