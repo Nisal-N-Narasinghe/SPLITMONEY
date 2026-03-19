@@ -165,9 +165,6 @@
 <div class="page-header">
     <h1 class="page-title"><span>Groups</span></h1>
     <div class="d-flex gap-2">
-        <a href="/trip-planner" class="btn-create" style="background: linear-gradient(135deg, #0ea5e9, #0369a1);">
-            <i class="bi bi-robot"></i> AI Planner
-        </a>
         <a href="/groups/create" class="btn-create">
             <i class="bi bi-plus-lg"></i> New Group
         </a>

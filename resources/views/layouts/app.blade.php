@@ -97,9 +97,6 @@
         </a>
         @auth
         <div class="d-flex align-items-center gap-3">
-            <a href="/trip-planner" class="btn-logout" style="text-decoration:none;background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.35);color:#7dd3fc;">
-                <i class="bi bi-robot"></i> Planner
-            </a>
             <div class="navbar-user">
                 <i class="bi bi-person-circle"></i>
                 <span>{{ Auth::user()->name }}</span>
@@ -125,6 +122,114 @@
     @yield('content')
 
 </div>
+
+@auth
+<a href="/trip-planner" class="ai-fab" title="AI Trip Planner">
+    <span class="ai-fab-ring"></span>
+    <span class="ai-fab-ring ai-fab-ring-2"></span>
+    <span class="ai-fab-icon"><i class="bi bi-stars"></i></span>
+    <span class="ai-fab-label">AI Planner</span>
+</a>
+<style>
+    .ai-fab {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        z-index: 1050;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        text-decoration: none;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5, #0ea5e9);
+        background-size: 200% 200%;
+        border-radius: 50px;
+        padding: 0;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(124,58,237,0.45), 0 2px 8px rgba(0,0,0,0.18);
+        transition: width 0.35s cubic-bezier(.4,0,.2,1), border-radius 0.35s, padding 0.35s, box-shadow 0.2s;
+        animation: fab-gradient 4s ease infinite;
+    }
+
+    @keyframes fab-gradient {
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .ai-fab:hover {
+        width: 170px;
+        border-radius: 50px;
+        padding-right: 20px;
+        box-shadow: 0 12px 40px rgba(124,58,237,0.55), 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .ai-fab-ring {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid rgba(167,139,250,0.5);
+        animation: fab-pulse 2s ease-out infinite;
+        pointer-events: none;
+    }
+
+    .ai-fab-ring-2 {
+        animation-delay: 1s;
+        border-color: rgba(99,102,241,0.35);
+    }
+
+    @keyframes fab-pulse {
+        0%   { transform: scale(1);   opacity: 0.8; }
+        100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    .ai-fab-icon {
+        flex-shrink: 0;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        animation: fab-bob 3s ease-in-out infinite;
+    }
+
+    @keyframes fab-bob {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-3px); }
+    }
+
+    .ai-fab-label {
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        white-space: nowrap;
+        opacity: 0;
+        max-width: 0;
+        overflow: hidden;
+        letter-spacing: 0.2px;
+        transition: opacity 0.25s 0.1s, max-width 0.35s;
+        position: relative;
+        z-index: 1;
+    }
+
+    .ai-fab:hover .ai-fab-label {
+        opacity: 1;
+        max-width: 120px;
+    }
+
+    .ai-fab:active {
+        transform: scale(0.94);
+        transition: transform 0.1s;
+    }
+</style>
+@endauth
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
