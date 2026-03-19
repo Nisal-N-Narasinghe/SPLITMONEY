@@ -97,6 +97,9 @@
         </a>
         @auth
         <div class="d-flex align-items-center gap-3">
+            <a href="/trip-planner" class="btn-logout" style="text-decoration:none;background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.35);color:#7dd3fc;">
+                <i class="bi bi-robot"></i> Planner
+            </a>
             <div class="navbar-user">
                 <i class="bi bi-person-circle"></i>
                 <span>{{ Auth::user()->name }}</span>
