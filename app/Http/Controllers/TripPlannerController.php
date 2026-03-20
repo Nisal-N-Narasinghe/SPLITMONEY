@@ -5,21 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\GroupMember;
 use App\Models\Trip;
-use App\Models\User;
 use App\Services\TripPlannerAiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Throwable;
 
 class TripPlannerController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())
-            ->where('is_admin', false)
+        $users = Auth::user()->friends()
             ->orderBy('name')
-            ->get(['id', 'name', 'email']);
+            ->get(['users.id', 'users.name', 'users.email']);
 
         return view('trip-planner.index', compact('users'));
     }
@@ -66,10 +65,12 @@ class TripPlannerController extends Controller
 
     public function createGroup(Request $request)
     {
+        $friendIds = Auth::user()->friends()->pluck('users.id')->all();
+
         $validated = $request->validate([
             'group_name' => 'required|string|max:255',
             'member_ids' => 'nullable|array',
-            'member_ids.*' => 'integer|exists:users,id',
+            'member_ids.*' => ['integer', Rule::in($friendIds)],
             'plan_json' => 'required|string',
         ]);
 

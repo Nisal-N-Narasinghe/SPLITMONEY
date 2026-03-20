@@ -4,24 +4,27 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\GroupMember;
 use App\Models\Settlement;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\BalanceService;
+use Illuminate\Validation\Rule;
 
 class GroupController extends Controller
 {
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->where('is_admin', false)->get();
+        $users = Auth::user()->friends()->orderBy('name')->get(['users.id', 'users.name', 'users.email']);
         return view('groups.create', compact('users'));
     }
 
     public function store(Request $request)
     {
+        $friendIds = Auth::user()->friends()->pluck('users.id')->all();
+
         $request->validate([
             'name'    => 'required|string|max:255',
             'members' => 'nullable|array',
+            'members.*' => ['integer', Rule::in($friendIds)],
         ]);
 
         $group = Group::create([

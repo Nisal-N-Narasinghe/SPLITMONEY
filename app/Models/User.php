@@ -24,6 +24,16 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Trip::class);
     }
 
+    public function friends()
+    {
+        return $this->belongsToMany(
+            self::class,
+            'friendships',
+            'user_id',
+            'friend_id'
+        )->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
