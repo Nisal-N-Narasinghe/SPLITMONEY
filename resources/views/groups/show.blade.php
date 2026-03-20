@@ -290,6 +290,139 @@
         padding: 2rem;
         font-size: 0.85rem;
     }
+
+    .budget-alert {
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        font-weight: 700;
+        border: 1px solid transparent;
+    }
+
+    .budget-alert-warning {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(249, 115, 22, 0.12));
+        border-color: rgba(245, 158, 11, 0.35);
+        color: #9a3412;
+    }
+
+    .budget-alert-danger {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.14));
+        border-color: rgba(239, 68, 68, 0.35);
+        color: #991b1b;
+    }
+
+    .budget-topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+        color: #475569;
+        font-weight: 600;
+    }
+
+    .budget-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .budget-metric {
+        background: linear-gradient(145deg, rgba(124,58,237,0.06), rgba(79,70,229,0.05));
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 0.85rem;
+    }
+
+    .budget-metric-label {
+        color: #64748b;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.3rem;
+    }
+
+    .budget-metric-value {
+        color: #0f172a;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .budget-progress-wrap {
+        margin-bottom: 1rem;
+    }
+
+    .budget-progress-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.45rem;
+        font-size: 0.84rem;
+        color: #475569;
+        font-weight: 700;
+    }
+
+    .budget-progress {
+        height: 10px;
+        background: rgba(148, 163, 184, 0.2);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .budget-progress-bar {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #10b981, #06b6d4);
+        transition: width 0.4s ease;
+    }
+
+    .budget-progress-bar.warn {
+        background: linear-gradient(90deg, #f59e0b, #f97316);
+    }
+
+    .budget-progress-bar.danger {
+        background: linear-gradient(90deg, #ef4444, #dc2626);
+    }
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.65rem;
+    }
+
+    .category-item {
+        background: rgba(124, 58, 237, 0.05);
+        border: 1px solid rgba(124, 58, 237, 0.18);
+        border-radius: 10px;
+        padding: 0.6rem 0.7rem;
+    }
+
+    .category-name {
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+    }
+
+    .category-value {
+        color: #1e293b;
+        font-size: 0.9rem;
+        font-weight: 800;
+    }
+
+    @media (max-width: 768px) {
+        .budget-alert {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
 </style>
 
 <div class="page-header">
@@ -313,6 +446,70 @@
         </form>
     </div>
 </div>
+
+@if($trip)
+    @if($warningExceeded)
+        <div class="budget-alert budget-alert-danger">
+            <span><i class="bi bi-exclamation-triangle-fill"></i> Budget exceeded by ${{ number_format($remainingOrOverAmount, 2) }}. Total spent is ${{ number_format($totalExpenses, 2) }} against ${{ number_format($totalBudget, 2) }} budget.</span>
+            <strong>{{ number_format($budgetUsagePercent, 2) }}% used</strong>
+        </div>
+    @elseif($warning80)
+        <div class="budget-alert budget-alert-warning">
+            <span><i class="bi bi-exclamation-circle-fill"></i> You are close to your trip budget. Spent ${{ number_format($totalExpenses, 2) }} of ${{ number_format($totalBudget, 2) }}.</span>
+            <strong>{{ number_format($budgetUsagePercent, 2) }}% used</strong>
+        </div>
+    @endif
+
+    <div class="section-card">
+        <div class="section-title"><i class="bi bi-wallet2"></i> Trip Budget Overview</div>
+        <div class="budget-topline">
+            <span>{{ $trip->destination }} · {{ $trip->days }} day{{ $trip->days > 1 ? 's' : '' }} · {{ $trip->travelers }} traveler{{ $trip->travelers > 1 ? 's' : '' }}</span>
+            <span>Mode: {{ \Illuminate\Support\Str::headline($trip->budget_mode) }}</span>
+        </div>
+
+        <div class="budget-metrics">
+            <div class="budget-metric">
+                <div class="budget-metric-label">Total Budget</div>
+                <div class="budget-metric-value">${{ number_format($totalBudget, 2) }}</div>
+            </div>
+            <div class="budget-metric">
+                <div class="budget-metric-label">Total Spent</div>
+                <div class="budget-metric-value">${{ number_format($totalExpenses, 2) }}</div>
+            </div>
+            <div class="budget-metric">
+                <div class="budget-metric-label">{{ $warningExceeded ? 'Exceeded' : 'Remaining' }}</div>
+                <div class="budget-metric-value">${{ number_format($remainingOrOverAmount, 2) }}</div>
+            </div>
+        </div>
+
+        <div class="budget-progress-wrap">
+            <div class="budget-progress-header">
+                <span>Budget Usage</span>
+                <span>{{ number_format($budgetUsagePercent, 2) }}%</span>
+            </div>
+            <div class="budget-progress">
+                <div
+                    class="budget-progress-bar {{ $warningExceeded ? 'danger' : ($warning80 ? 'warn' : '') }}"
+                    style="width: {{ min($budgetUsagePercent, 100) }}%;"
+                ></div>
+            </div>
+        </div>
+
+        @if(!empty($trip->category_budgets))
+            <div class="section-title" style="font-size:0.95rem;margin-top:0.1rem;margin-bottom:0.8rem;">
+                <i class="bi bi-pie-chart-fill"></i> Budget Distribution
+            </div>
+            <div class="category-grid">
+                @foreach($trip->category_budgets as $category => $amount)
+                    <div class="category-item">
+                        <div class="category-name">{{ \Illuminate\Support\Str::headline($category) }}</div>
+                        <div class="category-value">${{ number_format((float) $amount, 2) }}</div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+@endif
 
 {{-- Members --}}
 <div class="section-card">

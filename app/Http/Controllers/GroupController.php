@@ -60,10 +60,32 @@ class GroupController extends Controller
 
     public function show(Group $group, BalanceService $balanceService)
     {
-        $group->load(['members.user', 'expenses']);
+        $group->load(['members.user', 'expenses.payer']);
         $settlements = Settlement::where('group_id', $group->id)->get();
         $balances = $balanceService->getGroupBalances($group->id);
+        $trip = $group->trips()->latest('id')->first();
 
-        return view('groups.show', compact('group', 'balances', 'settlements'));
+        $totalExpenses = (float) $group->expenses->sum('amount');
+        $totalBudget = $trip ? (float) $trip->total_budget : 0.0;
+        $budgetUsagePercent = $totalBudget > 0
+            ? round(($totalExpenses / $totalBudget) * 100, 2)
+            : 0.0;
+
+        $warningExceeded = $trip && $totalBudget > 0 && $totalExpenses > $totalBudget;
+        $warning80 = $trip && $totalBudget > 0 && $budgetUsagePercent >= 80 && !$warningExceeded;
+        $remainingOrOverAmount = $trip ? abs($totalBudget - $totalExpenses) : 0.0;
+
+        return view('groups.show', compact(
+            'group',
+            'balances',
+            'settlements',
+            'trip',
+            'totalExpenses',
+            'totalBudget',
+            'budgetUsagePercent',
+            'warning80',
+            'warningExceeded',
+            'remainingOrOverAmount'
+        ));
     }
 }
