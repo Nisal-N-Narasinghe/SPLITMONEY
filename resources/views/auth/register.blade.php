@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{{ asset('css/user.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -235,37 +236,6 @@
             box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2), 0 8px 20px rgba(14, 116, 144, 0.25);
             outline: none;
             background: rgba(8, 47, 73, 0.58);
-        }
-
-        .password-input-wrap {
-            position: relative;
-        }
-
-        .password-input-wrap .form-control {
-            padding-right: 2.6rem;
-        }
-
-        .password-toggle-btn {
-            position: absolute;
-            right: 0.55rem;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: transparent;
-            color: #64748b;
-            width: 1.8rem;
-            height: 1.8rem;
-            border-radius: 0.45rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .password-toggle-btn:hover {
-            color: #0e7490;
-            background: rgba(148, 163, 184, 0.14);
         }
 
         .form-control.is-invalid {
