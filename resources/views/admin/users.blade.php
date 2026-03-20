@@ -134,7 +134,8 @@
     @if($users->isEmpty())
     <div class="empty-state"><i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>No users registered yet.</div>
     @else
-    <table class="users-table">
+        <div class="table-wrapper">
+            <table class="users-table">
         <thead>
             <tr>
                 <th>User</th>
@@ -146,6 +147,7 @@
         </thead>
         <tbody>
             @foreach($users as $user)
+    </div>
             <tr>
                 <td>
                     <div class="user-name-cell">
@@ -173,6 +175,8 @@
             @endforeach
         </tbody>
     </table>
+        </div>
+    </div>
     @endif
 </div>
 

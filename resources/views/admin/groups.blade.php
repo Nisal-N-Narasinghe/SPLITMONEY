@@ -113,7 +113,8 @@
     @if($groups->isEmpty())
     <div class="empty-state"><i class="bi bi-collection" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>No groups yet.</div>
     @else
-    <table class="groups-table">
+    <div class="table-wrapper">
+        <table class="groups-table">
         <thead>
             <tr>
                 <th>Group</th>
@@ -152,6 +153,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
     @endif
 </div>
 

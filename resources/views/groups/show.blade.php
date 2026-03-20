@@ -546,38 +546,41 @@
 {{-- Expenses --}}
 <div class="section-card">
     <div class="section-title"><i class="bi bi-receipt"></i> Expenses</div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Paid By</th>
-                <th>Date</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($group->expenses as $expense)
-            <tr>
-                <td>{{ $expense->description }}</td>
-                <td>
-                    <span class="member-pill" style="font-size:0.78rem;padding:0.2rem 0.6rem;">
-                        <i class="bi bi-person-fill"></i> {{ $expense->payer->name }}
-                    </span>
-                </td>
-                <td>{{ \Carbon\Carbon::parse($expense->expense_date)->format('d M Y') }}</td>
-                <td class="amount-cell">${{ number_format($expense->amount, 2) }}</td>
-            </tr>
-            @empty
-            <tr class="empty-row"><td colspan="4">No expenses yet</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Paid By</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($group->expenses as $expense)
+                <tr>
+                    <td>{{ $expense->description }}</td>
+                    <td>
+                        <span class="member-pill" style="font-size:0.78rem;padding:0.2rem 0.6rem;">
+                            <i class="bi bi-person-fill"></i> {{ $expense->payer->name }}
+                        </span>
+                    </td>
+                    <td>{{ \Carbon\Carbon::parse($expense->expense_date)->format('d M Y') }}</td>
+                    <td class="amount-cell">${{ number_format($expense->amount, 2) }}</td>
+                </tr>
+                @empty
+                <tr class="empty-row"><td colspan="4">No expenses yet</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {{-- Settlements --}}
 <div class="section-card">
     <div class="section-title"><i class="bi bi-arrow-left-right"></i> Settlements</div>
-    <table class="data-table">
+    <div class="table-wrapper">
+        <table class="data-table">
         <thead>
             <tr>
                 <th>From</th>
@@ -601,6 +604,7 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>
 
 @endsection

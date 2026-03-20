@@ -564,10 +564,39 @@
                 border-color: rgba(14, 116, 144, 0.24) !important;
             }
 
+            .table-wrapper {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                border-radius: 10px;
+            }
+
+            .table-wrapper::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .table-wrapper::-webkit-scrollbar-track {
+                background: rgba(148, 163, 184, 0.1);
+                border-radius: 3px;
+            }
+
+            .table-wrapper::-webkit-scrollbar-thumb {
+                background: rgba(148, 163, 184, 0.3);
+                border-radius: 3px;
+            }
+
+            .table-wrapper::-webkit-scrollbar-thumb:hover {
+                background: rgba(148, 163, 184, 0.5);
+            }
+
             @media (max-width: 768px) {
                 .main-content .page-title,
                 .main-content .planner-title {
                     font-size: 1.5rem !important;
+                }
+
+                .table-wrapper table {
+                    min-width: 640px;
                 }
             }
             </style>
