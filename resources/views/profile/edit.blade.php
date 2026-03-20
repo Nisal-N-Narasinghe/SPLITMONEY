@@ -90,6 +90,66 @@
             </button>
         </form>
     </div>
+
+    <div class="profile-card">
+        <h2 class="profile-card-title">Friends</h2>
+        <p class="profile-card-subtitle">Add registered users as friends. Only friends can be added to groups.</p>
+
+        <form method="POST" action="{{ route('profile.friends.add') }}" class="mb-4">
+            @csrf
+
+            <div class="mb-3">
+                <label for="friend-search" class="form-label">Search And Select Friends</label>
+                <input id="friend-search" type="text" class="form-control mb-2" placeholder="Search by name or email...">
+
+                <div class="friend-picker-list" id="friend-picker-list">
+                    @forelse($availableUsers as $candidate)
+                        <label class="friend-picker-item" data-search="{{ strtolower($candidate->name . ' ' . $candidate->email) }}">
+                            <input type="checkbox" name="friend_ids[]" value="{{ $candidate->id }}"
+                                {{ in_array($candidate->id, old('friend_ids', [])) ? 'checked' : '' }}>
+                            <span>
+                                <span class="friend-name">{{ $candidate->name }}</span>
+                                <span class="friend-email">{{ $candidate->email }}</span>
+                            </span>
+                        </label>
+                    @empty
+                        <div class="friend-empty">No available users to add.</div>
+                    @endforelse
+                </div>
+
+                @error('friend_ids')
+                    <div class="field-error">{{ $message }}</div>
+                @enderror
+                @error('friend_ids.*')
+                    <div class="field-error">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="bi bi-person-plus-fill"></i> Add Selected Friends
+            </button>
+        </form>
+
+        <div class="friend-list">
+            @forelse($friends as $friend)
+                <div class="friend-item">
+                    <div class="friend-meta">
+                        <div class="friend-name">{{ $friend->name }}</div>
+                        <div class="friend-email">{{ $friend->email }}</div>
+                    </div>
+                    <form method="POST" action="{{ route('profile.friends.remove', $friend) }}" class="m-0">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-remove-friend">Remove</button>
+                    </form>
+                </div>
+            @empty
+                <div class="friend-empty">
+                    No friends added yet.
+                </div>
+            @endforelse
+        </div>
+    </div>
 </div>
 <script>
 document.querySelectorAll('[data-toggle-password]').forEach(function(button) {
@@ -107,5 +167,20 @@ document.querySelectorAll('[data-toggle-password]').forEach(function(button) {
         button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
     });
 });
+
+const friendSearchInput = document.getElementById('friend-search');
+const friendPickerItems = document.querySelectorAll('.friend-picker-item');
+
+if (friendSearchInput && friendPickerItems.length) {
+    friendSearchInput.addEventListener('input', function() {
+        const query = friendSearchInput.value.trim().toLowerCase();
+
+        friendPickerItems.forEach(function(item) {
+            const searchable = item.dataset.search || '';
+            const visible = searchable.includes(query);
+            item.style.display = visible ? 'flex' : 'none';
+        });
+    });
+}
 </script>
 @endsection

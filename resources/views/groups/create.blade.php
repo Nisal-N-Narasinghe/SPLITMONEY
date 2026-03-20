@@ -213,7 +213,7 @@
         </div>
 
         <div class="mb-4">
-            <div class="section-label">Members</div>
+            <div class="section-label">Friends</div>
 
             <div class="you-badge">
                 <i class="bi bi-person-fill"></i>
@@ -229,7 +229,7 @@
             @endforeach
 
             @if($users->isEmpty())
-            <p style="font-size:0.85rem;color:#94a3b8;margin:0;">No other users registered yet.</p>
+            <p style="font-size:0.85rem;color:#94a3b8;margin:0;">You have no friends yet. Add friends from your <a href="{{ route('profile.edit') }}">profile</a> first.</p>
             @endif
         </div>
 

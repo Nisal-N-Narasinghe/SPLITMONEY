@@ -459,9 +459,9 @@
                     <input id="group_name" name="group_name" class="planner-input" required>
                 </div>
                 <div>
-                    <label class="planner-label" for="member_ids">Members (optional)</label>
+                    <label class="planner-label" for="member_ids">Friends (optional)</label>
                     <div id="member_ids" class="members-checkbox-list">
-                        @foreach($users as $user)
+                        @forelse($users as $user)
                         <label class="member-option">
                             <input type="checkbox" name="member_ids[]" value="{{ $user->id }}">
                             <span>
@@ -469,7 +469,9 @@
                                 <span class="member-email">{{ $user->email }}</span>
                             </span>
                         </label>
-                        @endforeach
+                        @empty
+                        <p class="muted-note" style="margin:0;">You have no friends yet. Add friends from your <a href="{{ route('profile.edit') }}">profile</a> first.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

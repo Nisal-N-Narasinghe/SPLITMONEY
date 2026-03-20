@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::post('/profile/friends', [ProfileController::class, 'addFriend'])->name('profile.friends.add');
+    Route::delete('/profile/friends/{friend}', [ProfileController::class, 'removeFriend'])->name('profile.friends.remove');
 
     Route::get('/trip-planner', [TripPlannerController::class, 'index']);
     Route::post('/trip-planner/plan', [TripPlannerController::class, 'plan']);
