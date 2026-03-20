@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="{{ asset('css/user.css') }}" rel="stylesheet">
 
         <style>
         * {
@@ -372,6 +373,10 @@
                         <i class="bi bi-person-circle"></i>
                         <span>{{ Auth::user()->name }}</span>
                     </div>
+                    <a href="{{ route('profile.edit') }}" class="btn-logout"
+                        style="text-decoration:none;background:rgba(15,118,110,0.12);border-color:rgba(15,118,110,0.24);color:#0f172a;">
+                        <i class="bi bi-gear-fill"></i> Profile
+                    </a>
                     @if(Auth::user()->is_admin)
                     <a href="/admin" class="btn-logout"
                         style="text-decoration:none;background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;">

@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{{ asset('css/user.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -610,16 +611,26 @@
 
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    placeholder="Min. 6 characters">
+                <div class="password-input-wrap">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror password-toggle-input"
+                        placeholder="Min. 6 characters">
+                    <button type="button" class="password-toggle-btn" data-toggle-password aria-label="Show password" aria-pressed="false">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
                 <span class="hint">At least 6 characters</span>
                 @error('password')<span class="invalid-feedback">{{ $message }}</span>@enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control"
-                    placeholder="Repeat your password">
+                <div class="password-input-wrap">
+                    <input type="password" name="password_confirmation" class="form-control password-toggle-input"
+                        placeholder="Repeat your password">
+                    <button type="button" class="password-toggle-btn" data-toggle-password aria-label="Show password" aria-pressed="false">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -632,5 +643,22 @@
         </div>
     </div>
 </div>
+<script>
+document.querySelectorAll('[data-toggle-password]').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const wrapper = button.closest('.password-input-wrap');
+        const input = wrapper ? wrapper.querySelector('.password-toggle-input') : null;
+        if (!input) {
+            return;
+        }
+
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        button.setAttribute('aria-pressed', isPassword ? 'true' : 'false');
+        button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+    });
+});
+</script>
 </body>
 </html>

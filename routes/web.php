@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\SettlementController;
 use App\Http\Controllers\TripPlannerController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -25,6 +26,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
     Route::get('/trip-planner', [TripPlannerController::class, 'index']);
     Route::post('/trip-planner/plan', [TripPlannerController::class, 'plan']);
