@@ -1,0 +1,228 @@
+/* Shared UI primitives for user-facing pages (auth + app user views) */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(124, 58, 237, 0.1);
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(79,70,229,0.08));
+    border: 2px solid rgba(124, 58, 237, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #7c3aed;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(79,70,229,0.15));
+    border-color: #7c3aed;
+    transform: translateX(-2px);
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #0ea5e9 100%);
+    background-size: 200% 200%;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.6rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 8px 24px rgba(124,58,237,0.35), 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    letter-spacing: 0.3px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(124,58,237,0.45), 0 6px 16px rgba(0,0,0,0.15);
+    background-position: 100% 50%;
+}
+
+.btn-submit:active {
+    transform: translateY(-1px);
+}
+
+.password-input-wrap {
+    position: relative;
+}
+
+.password-input-wrap .form-control {
+    padding-right: 2.6rem;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #64748b;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.password-toggle-btn:hover {
+    color: #0e7490;
+    background: rgba(148, 163, 184, 0.14);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+}
+
+.profile-card {
+    position: relative;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(247, 249, 246, 0.9));
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    padding: 1.4rem;
+}
+
+.profile-card-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #0f172a;
+}
+
+.profile-card-subtitle {
+    margin-bottom: 1rem;
+    color: #64748b;
+    font-size: 0.88rem;
+}
+
+.field-error {
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+    color: #b91c1c;
+}
+
+.password-help {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.friend-list {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.friend-picker-list {
+    display: grid;
+    gap: 0.5rem;
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    padding: 0.6rem;
+}
+
+.friend-picker-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.55rem 0.65rem;
+    cursor: pointer;
+}
+
+.friend-picker-item:hover {
+    border-color: rgba(79, 70, 229, 0.35);
+    background: rgba(238, 242, 255, 0.65);
+}
+
+.friend-picker-item input[type='checkbox'] {
+    margin-top: 0.2rem;
+}
+
+.friend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    padding: 0.65rem 0.75rem;
+}
+
+.friend-meta {
+    min-width: 0;
+}
+
+.friend-name {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.9rem;
+    line-height: 1.25;
+}
+
+.friend-email {
+    color: #64748b;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-remove-friend {
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    background: rgba(254, 226, 226, 0.7);
+    color: #b91c1c;
+    border-radius: 10px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-remove-friend:hover {
+    background: rgba(254, 202, 202, 0.85);
+}
+
+.friend-empty {
+    border: 1px dashed rgba(148, 163, 184, 0.35);
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: 12px;
+    padding: 0.75rem 0.85rem;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}

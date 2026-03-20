@@ -15,6 +15,7 @@ SplitMoney is a full-featured expense splitting application that helps groups of
 - **Balance Calculation** — Real-time balance computation showing what each member owes or is owed
 - **Dashboard** — View balances and outstanding amounts at a glance
 - **Admin Panel** — Comprehensive admin interface to manage all users and groups
+- **AI Trip Planner** — Generate day-by-day trip plans and budget breakdowns with Gemini, then create groups from approved plans
 
 ## Tech Stack
 
@@ -34,10 +35,12 @@ app/
     Controllers/
       Api/               # API Controllers: AuthController, GroupController,
                          # ExpenseController, SettlementController, AdminController
+            TripPlannerController.php  # Web controller for AI trip planning + create-group flow
     Middleware/          # AdminMiddleware — protects admin routes
-  Models/                # User, Group, GroupMember, Expense, ExpenseSplit, Settlement
+    Models/                # User, Group, GroupMember, Expense, ExpenseSplit, Settlement, Trip
   Services/
     BalanceService.php   # Business logic for computing balances between members
+        TripPlannerAiService.php  # Gemini integration and trip plan normalization
 database/
   migrations/            # Database schema definitions
   seeders/               # DatabaseSeeder, UserSeeder
@@ -77,6 +80,11 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
+# Gemini (required for AI Trip Planner)
+# GEMINI_API_KEY=your_api_key_here
+# GEMINI_MODEL=gemini-2.5-flash
+# GEMINI_TIMEOUT=30
+
 # 4. Set up the database
 # For SQLite (default):
 touch database/database.sqlite
@@ -103,6 +111,46 @@ php artisan serve
 ```
 
 The app will be available at `http://localhost:8000`.
+
+## AI Trip Planner
+
+The Trip Planner helps users generate:
+
+- destination-aware daily itinerary
+- category-based budget estimates (accommodation, food, transport, activities, misc)
+- optional daily budget split
+- one-click group creation from the generated plan
+
+### Setup
+
+Add these values in your `.env`:
+
+```dotenv
+GEMINI_API_KEY=your_gemini_key
+GEMINI_MODEL=gemini-2.5-flash
+GEMINI_TIMEOUT=30
+```
+
+Then clear config cache:
+
+```bash
+php artisan config:clear
+```
+
+### Web Flow
+
+1. Login to the app.
+2. Open `/trip-planner`.
+3. Enter destination, days, travelers, budget mode, and optional notes.
+4. Click **Generate Plan**.
+5. Review itinerary and budget.
+6. Select members using checkbox boxes.
+7. Create group from the generated plan.
+
+### Data Persistence
+
+- Chat history is **not persisted** in v1.
+- Confirmed plans are stored in the `trips` table and linked to created groups.
 
 ### Admin Account Setup
 
@@ -681,6 +729,87 @@ DELETE /api/admin/groups/{group_id}
     "message": "Group deleted successfully."
 }
 ```
+
+---
+
+### 7. Trip Planner Endpoints (Authenticated Web)
+
+These routes are under web auth middleware and are used by the planner page.
+
+#### Open Planner Page
+
+```
+GET /trip-planner
+```
+
+#### Generate Trip Plan (JSON response)
+
+```
+POST /trip-planner/plan
+```
+
+**Request Body (form fields):**
+
+```json
+{
+    "destination": "Bali",
+    "days": 4,
+    "travelers": 3,
+    "budget_mode": "both",
+    "total_budget": 1500,
+    "notes": "Prefer beaches and local food"
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+    "message": "Plan generated successfully.",
+    "plan": {
+        "summary": "...",
+        "destination": "Bali",
+        "days": 4,
+        "travelers": 3,
+        "budget_mode": "both",
+        "daily_plan": [{ "day": 1, "title": "Arrival", "activities": ["..."] }],
+        "budget": {
+            "total": 1500,
+            "by_day": [375, 375, 375, 375],
+            "categories": {
+                "accommodation": 500,
+                "food": 350,
+                "transport": 250,
+                "activities": 300,
+                "misc": 100
+            }
+        },
+        "tips": ["..."]
+    }
+}
+```
+
+#### Create Group from Generated Plan
+
+```
+POST /trip-planner/create-group
+```
+
+**Request Body (form fields):**
+
+```json
+{
+    "group_name": "Bali Trip",
+    "member_ids": [2, 3],
+    "plan_json": "{...}"
+}
+```
+
+**Behavior:**
+
+- Creates a new group.
+- Adds selected members + creator.
+- Saves plan metadata into `trips` with a `group_id` reference.
 
 ---
 

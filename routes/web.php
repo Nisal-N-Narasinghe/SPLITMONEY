@@ -6,12 +6,15 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\SettlementController;
+use App\Http\Controllers\TripPlannerController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/aboutus', [DashboardController::class, 'aboutus'])->name('aboutus');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
@@ -23,6 +26,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::post('/profile/friends', [ProfileController::class, 'addFriend'])->name('profile.friends.add');
+    Route::delete('/profile/friends/{friend}', [ProfileController::class, 'removeFriend'])->name('profile.friends.remove');
+
+    Route::get('/trip-planner', [TripPlannerController::class, 'index']);
+    Route::post('/trip-planner/plan', [TripPlannerController::class, 'plan']);
+    Route::post('/trip-planner/create-group', [TripPlannerController::class, 'createGroup']);
 
     Route::get('/groups/create', [GroupController::class, 'create']);
     Route::post('/groups', [GroupController::class, 'store']);

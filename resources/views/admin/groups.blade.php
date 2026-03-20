@@ -101,10 +101,10 @@
     }
 </style>
 
-<h1 class="page-title">All Groups <span style="color:#94a3b8;font-size:1rem;font-weight:500;">({{ $groups->count() }})</span></h1>
+<h1 class="page-title">All Groups <span class="title-count">({{ $groups->count() }})</span></h1>
 
 @if(session('success'))
-<div style="background:#dcfce7;color:#166534;border-radius:10px;padding:0.7rem 1rem;margin-bottom:1rem;font-size:0.85rem;display:flex;align-items:center;gap:6px;">
+<div class="msg-success">
     <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
 </div>
 @endif
@@ -113,7 +113,8 @@
     @if($groups->isEmpty())
     <div class="empty-state"><i class="bi bi-collection" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>No groups yet.</div>
     @else
-    <table class="groups-table">
+    <div class="table-wrapper">
+        <table class="groups-table">
         <thead>
             <tr>
                 <th>Group</th>
@@ -133,10 +134,10 @@
                         {{ $group->name }}
                     </div>
                 </td>
-                <td style="color:#64748b;">{{ $group->creator?->name ?? '—' }}</td>
+                <td class="td-muted">{{ $group->creator?->name ?? '—' }}</td>
                 <td><span class="count-badge">{{ $group->members()->count() }}</span></td>
                 <td><span class="count-badge">{{ $group->expenses()->count() }}</span></td>
-                <td style="color:#94a3b8;font-size:0.78rem;">{{ $group->created_at->format('d M Y') }}</td>
+                <td><span class="td-date">{{ $group->created_at->format('d M Y') }}</span></td>
                 <td>
                     <form method="POST" action="/admin/groups/{{ $group->id }}"
                         data-confirm="All expenses and settlements in this group will also be deleted."
@@ -152,7 +153,38 @@
             @endforeach
         </tbody>
     </table>
+    </div>
     @endif
 </div>
+
+<style>
+    .title-count {
+        color: #94a3b8;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .msg-success {
+        background: rgba(8, 145, 178, 0.2);
+        color: #bae6fd;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        border-radius: 10px;
+        padding: 0.7rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .td-muted {
+        color: #94a3b8;
+    }
+
+    .td-date {
+        color: #94a3b8;
+        font-size: 0.78rem;
+    }
+</style>
 
 @endsection

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\SettlementController;
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // Settlements
     Route::get('/groups/{group}/settlements', [SettlementController::class, 'index']);
     Route::post('/settlements',               [SettlementController::class, 'store']);
+
+    // ── AI Trip Planner ───────────────────────────────────────────────────
+    Route::prefix('ai')->group(function () {
+        Route::post('/trip-plan',               [AiController::class, 'tripPlan']);
+        Route::post('/budget-estimate',         [AiController::class, 'budgetEstimate']);
+        Route::post('/expense-split-suggestions', [AiController::class, 'expenseSplitSuggestions']);
+        Route::post('/activity-suggestions',    [AiController::class, 'activitySuggestions']);
+    });
 
     // ── Admin routes ───────────────────────────────────────────────────────
     Route::middleware('admin')->prefix('admin')->group(function () {

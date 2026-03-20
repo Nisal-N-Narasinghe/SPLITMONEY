@@ -17,4 +17,8 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('groups'));
     }
+
+    public function aboutus(){
+        return view('welcome');
+    }
 }

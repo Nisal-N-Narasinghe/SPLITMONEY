@@ -115,17 +115,17 @@
 </style>
 
 <div class="page-header">
-    <h1 class="page-title">Users <span style="color:#94a3b8;font-size:1rem;font-weight:500;">({{ $users->count() }})</span></h1>
+    <h1 class="page-title">Users <span class="title-count">({{ $users->count() }})</span></h1>
 </div>
 
 @if(session('success'))
-<div style="background:#dcfce7;color:#166534;border-radius:10px;padding:0.7rem 1rem;margin-bottom:1rem;font-size:0.85rem;display:flex;align-items:center;gap:6px;">
+<div class="msg-success">
     <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
 </div>
 @endif
 
 @if(session('error'))
-<div style="background:#fee2e2;color:#991b1b;border-radius:10px;padding:0.7rem 1rem;margin-bottom:1rem;font-size:0.85rem;">
+<div class="msg-error">
     {{ session('error') }}
 </div>
 @endif
@@ -134,7 +134,8 @@
     @if($users->isEmpty())
     <div class="empty-state"><i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>No users registered yet.</div>
     @else
-    <table class="users-table">
+        <div class="table-wrapper">
+            <table class="users-table">
         <thead>
             <tr>
                 <th>User</th>
@@ -146,6 +147,7 @@
         </thead>
         <tbody>
             @foreach($users as $user)
+    </div>
             <tr>
                 <td>
                     <div class="user-name-cell">
@@ -153,7 +155,7 @@
                         {{ $user->name }}
                     </div>
                 </td>
-                <td style="color:#64748b;">{{ $user->email }}</td>
+                <td class="td-muted">{{ $user->email }}</td>
                 <td>
                     <span class="count-badge">{{ $user->groupMembers()->count() }}</span>
                 </td>
@@ -173,7 +175,44 @@
             @endforeach
         </tbody>
     </table>
+        </div>
+    </div>
     @endif
 </div>
+
+<style>
+    .title-count {
+        color: #94a3b8;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .msg-success,
+    .msg-error {
+        border-radius: 10px;
+        padding: 0.7rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .msg-success {
+        background: rgba(8, 145, 178, 0.2);
+        color: #bae6fd;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .msg-error {
+        background: rgba(127, 29, 29, 0.4);
+        color: #fecaca;
+        border: 1px solid rgba(252, 165, 165, 0.36);
+    }
+
+    .td-muted {
+        color: #94a3b8;
+    }
+</style>
 
 @endsection
