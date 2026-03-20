@@ -372,6 +372,10 @@
                         <i class="bi bi-person-circle"></i>
                         <span>{{ Auth::user()->name }}</span>
                     </div>
+                    <a href="{{ route('profile.edit') }}" class="btn-logout"
+                        style="text-decoration:none;background:rgba(15,118,110,0.12);border-color:rgba(15,118,110,0.24);color:#0f172a;">
+                        <i class="bi bi-gear-fill"></i> Profile
+                    </a>
                     @if(Auth::user()->is_admin)
                     <a href="/admin" class="btn-logout"
                         style="text-decoration:none;background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;">

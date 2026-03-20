@@ -237,6 +237,37 @@
             background: rgba(8, 47, 73, 0.58);
         }
 
+        .password-input-wrap {
+            position: relative;
+        }
+
+        .password-input-wrap .form-control {
+            padding-right: 2.6rem;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 0.55rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #64748b;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 0.45rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .password-toggle-btn:hover {
+            color: #0e7490;
+            background: rgba(148, 163, 184, 0.14);
+        }
+
         .form-control.is-invalid {
             border-color: #fda4af;
         }
@@ -610,16 +641,26 @@
 
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    placeholder="Min. 6 characters">
+                <div class="password-input-wrap">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror password-toggle-input"
+                        placeholder="Min. 6 characters">
+                    <button type="button" class="password-toggle-btn" data-toggle-password aria-label="Show password" aria-pressed="false">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
                 <span class="hint">At least 6 characters</span>
                 @error('password')<span class="invalid-feedback">{{ $message }}</span>@enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control"
-                    placeholder="Repeat your password">
+                <div class="password-input-wrap">
+                    <input type="password" name="password_confirmation" class="form-control password-toggle-input"
+                        placeholder="Repeat your password">
+                    <button type="button" class="password-toggle-btn" data-toggle-password aria-label="Show password" aria-pressed="false">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -632,5 +673,22 @@
         </div>
     </div>
 </div>
+<script>
+document.querySelectorAll('[data-toggle-password]').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const wrapper = button.closest('.password-input-wrap');
+        const input = wrapper ? wrapper.querySelector('.password-toggle-input') : null;
+        if (!input) {
+            return;
+        }
+
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        button.setAttribute('aria-pressed', isPassword ? 'true' : 'false');
+        button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        button.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+    });
+});
+</script>
 </body>
 </html>
